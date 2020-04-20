@@ -40,8 +40,7 @@ def sign(client_id, payload, compact=True):
     public_key.import_key(**json_decode(key.export_public()))
     jwstoken = jws.JWS(payload)
     jwstoken.add_signature(key, None,
-                            json_encode({"alg": "EdDSA",
-                                         "crv": "Ed25519",
+                            json_encode({"alg": "RS512",
                                          "cid": client_id,
                                          "kid": public_key.thumbprint()}))
     signed_payload = jwstoken.serialize(compact)
