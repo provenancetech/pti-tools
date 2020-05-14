@@ -42,7 +42,7 @@ def sign(client_id, payload, compact=True):
     jwstoken.add_signature(key, None,
                             json_encode({"alg": "RS512",
                                          "cid": client_id,
-                                         "kid": public_key.thumbprint()}))
+                                         "kid": public_key.thumbprint()}), None)
     signed_payload = jwstoken.serialize(compact)
     return signed_payload
 
