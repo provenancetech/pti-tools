@@ -1,4 +1,4 @@
-from hashlib import md5
+from hashlib import sha256
 from time import gmtime
 import requests
 import urllib.parse
@@ -31,8 +31,8 @@ def get_http_gmt():
     http_time.append("GMT")
     return " ".join(http_time)
 
-def get_content_md5(data):
-    m = md5(data)
+def get_content_sha256(data):
+    m = sha256(data)
     return m.hexdigest().upper()
 
 def sign(client_id, payload, compact=True):
@@ -55,7 +55,7 @@ if __name__ == """__main__""":
 
     payload = method + "\n"
     if method == "POST":
-        payload = payload + get_content_md5(args.data.encode('UTF-8')) + "\n"
+        payload = payload + get_content_sha256(args.data.encode('UTF-8')) + "\n"
         payload = payload + 'content-type:' + args.content_type + "\n"
     else:
         payload + "\n\n"
