@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+      <script src="https://payments.worldpay.com/resources/cse/js/worldpay-cse-1.latest.min.js"></script>
+      <script type="text/javascript">
+
+          function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            });
+          }
+
+          function sendEncryptedData(){
+              var file = document.querySelector("#file-input").files[0];
+              var reader = new FileReader();
+              reader.addEventListener('error', function() {
+                  alert('Error : Failed to read file');
+              });
+              reader.addEventListener('load', function(e) {
+                  Worldpay.setPublicKey(e.target.result);
+                  var data = {
+                      cvc: document.getElementById('cvc').value,
+                      cardHolderName: document.getElementById('name').value,
+                      cardNumber: document.getElementById('ccn').value,
+                      expiryMonth: document.getElementById('month').value,
+                      expiryYear: document.getElementById('year').value,
+                  }
+                  // Call encryption function
+                  var encryptedData = Worldpay.encrypt(data, function(error) {
+                      alert(error);
+
+                  });
+                  // Pass encrypted data back to your server
+                  if (encryptedData) {
+                    var body = {};
+                    body.orderDescription = 'test';
+                    body.orderCode = uuidv4();
+                    body.orderContent = 'test'
+                    body.name = {
+                      firstName: document.getElementById('name').value.split(' ')[0],
+                      lastName: document.getElementById('name').value.split(' ')[1]
+                    }
+                    body.tokenizedPaymentData=encryptedData;
+                    body.address= {
+                      streetAddress: document.getElementById('street').value,
+                      city: document.getElementById('city').value,
+                      postalCode: document.getElementById('postal').value,
+                      stateCode: {
+                        code: document.getElementById('state').value
+                      },
+                      country: {
+                        code: document.getElementById('country').value
+                      },
+                    };
+                    body.amount = document.getElementById('amount').value;
+                    body.currency = 'USD';
+                    var headers = {};
+                    headers["content-type"] = 'application/json';
+                    headers["x-pti-client-id"] = '{{ clientId }}';
+                    headers["x-pti-token"] = '{{ token }}';
+                    fetch('{{ fiatInUrl }}', {
+                      method:"POST",
+                      headers:headers,
+                      body: JSON.stringify(body)
+                    })
+                    .then(result => {
+                        // do something with the result
+                         result.json().then(data => {
+                            document.getElementById('result').value = JSON.stringify(data);
+                         });
+                    });
+
+
+                  }
+              });
+              reader.readAsText(file);
+          }
+
+      </script>
+  </head>
+  <body>
+<input type="file" id="file-input" />
+	<p>Name:</p>
+	<input id="name" type="text" name="name">
+    <p>Street Address:</p>
+	<input id="street" type="text" name="street">
+    <p>City:</p>
+	<input id="city" type="text" name="city">
+    <p>Postal code:</p>
+	<input id="postal" type="text" name="postal">
+    <p>State code:</p>
+	<input id="state" type="text" name="state">
+    <p>Country code:</p>
+	<input id="country" type="text" name="country">
+	<p>CC Number:</p>
+	<input id="ccn" type="text" name="ccn">
+	<p>Expiry month:</p>
+	<input id="month" type="text" name="month">
+	<p>Expiry year:</p>
+	<input id="year" type="text" name="year">
+	<p>cvc:</p>
+	<input id="cvc" type="text" name="cvc">
+	<p>amount:</p>
+	<input id="amount" type="text" name="amount">
+	<button onclick="sendEncryptedData()">Send</button>
+    <p>RESULT:</p>
+    <textarea id="result"></textarea>
+  </body>
+  <title>Test payment page</title>
+</html>
