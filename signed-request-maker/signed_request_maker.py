@@ -13,6 +13,7 @@ parser.add_argument("-k", "--key-path", help="Path to the JWK private key.")
 parser.add_argument("-d", "--data", help="The data to POST; implies POST.")
 parser.add_argument("-c", "--clientId", help="PTI client ID (guid)")
 parser.add_argument("--destination", help="Where to send the request")
+parser.add_argument("--insecure", action='store_true', default=False, help="Allow insecure server connections when using SSL")
 parser.add_argument("--content-type", default="application/json; charset=utf-8")
 parser.add_argument("--debug", action='store_true', help="Output the calculated Payload and the Signature to stderr")
 parser.add_argument("url")
@@ -74,9 +75,9 @@ if __name__ == """__main__""":
         args.destination = args.url
 
     if method == "POST":
-        resp = requests.post(args.destination, data = args.data.encode('UTF-8'), headers={"Content-Type": args.content_type, "Date": date, "x-pti-signature": signature, "x-pti-client-id": args.clientId})
+        resp = requests.post(args.destination, verify=(not args.insecure), data = args.data.encode('UTF-8'), headers={"Content-Type": args.content_type, "Date": date, "x-pti-signature": signature, "x-pti-client-id": args.clientId})
     else:
-        resp = requests.get(args.destination, headers={"Date": date, "x-pti-signature": signature,  "x-pti-client-id": args.clientId})
+        resp = requests.get(args.destination, verify=(not args.insecure), headers={"Date": date, "x-pti-signature": signature,  "x-pti-client-id": args.clientId})
 
     data = dump.dump_all(resp).decode('utf-8')
     response_idx = data.rfind('\r\n> \r\n')
