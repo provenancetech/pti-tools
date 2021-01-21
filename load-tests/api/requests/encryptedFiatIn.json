@@ -1,0 +1,23 @@
+{
+  "sourceMethod": {
+    "currency": "USD",
+    "paymentInformation" : {
+      "type": "ENCRYPTED_CREDIT_CARD",
+      "creditCardType": "mastercard",
+      "cseInformations" : "eyJhbGciOiJSU0ExXzUiLCJlbmMiOiJBMjU2R0NNIiwia2lkIjoiMyIsImNvbS53b3JsZHBheS5hcGlWZXJzaW9uIjoiMS4wIiwiY29tLndvcmxkcGF5LmxpYlZlcnNpb24iOiIxLjAuMiIsImNvbS53b3JsZHBheS5jaGFubmVsIjoiamF2YXNjcmlwdCJ9.f2ooABa86yOHw5BpVGAyuOWJAYhyqyaujr_f5-KhLqYApfWM0_bmfUJIduNGtBWHbTEUONa6lKdv-EfJ96rCPdOaqGk-PzWbULp3_D341v7PYfIce9GoRrsfceeN8v2z1fbwKL0PGkKu3491bp1LkN8RXT5m6FfR2DR49O-IL0t5KMArsubExF1Jx0HN5Vt2P2nzwCQCefGSHMHlZSTVRXvY3GS0Bvjw-OJo8DlBaKFXSU9NtKecAt11lQlFufTy6NcghYaqqZVYlecHmaG8cc2SxPIRbUsBHRiW_TbY6lykzeQmQcJSX7j8kcLp3LsNpxL01xemJGtpR1viUZHa_w.jac1AAdXCXXn4lmJ.0VQiAVmhwevpgNA-0mtF69RzfXUUVT2qNh7t-X0mTFK4ZxPOTraei7mgbFDTiFQAMUzb5nTTU1TJgh2PLtB4vUlkRzwNoH7Ivpis3Z6buelFBCnJ3osoNamWULVH3257df1gKKfCWoLgSvmGUHfhIo1q._pO_FA6Sxe4CHjMBdEIvzw",
+      "creditCardNumberHash": "feead9c948a4b3393498cf17816fb289c2d4d80d4ffb5b11a7171c5f6c48f573",
+      "statementMessage": "pti",
+      "transactionDescription": "test 123",
+      "creditCardAddress": {
+        "streetAddress": "address",
+        "city": "city",
+        "stateCode": "US-CA",
+        "country": "US",
+        "postalCode": "AAAA"
+      }
+    },
+    "paymentMethodType": "FIAT"
+  },
+  "amount": 12,
+  "type": "FUNDING"
+}
