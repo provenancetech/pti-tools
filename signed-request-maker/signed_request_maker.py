@@ -81,6 +81,6 @@ if __name__ == """__main__""":
 
     data = dump.dump_all(resp).decode('utf-8')
     response_idx = data.rfind('\r\n> \r\n')
-    print(data[:response_idx], file=sys.stderr)
+    #print(data[:response_idx], file=sys.stderr)
     print(data[response_idx+4:])
 
