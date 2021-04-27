@@ -72,7 +72,7 @@ for event in sorted_events:
 f.write("""</tbody></table>
 	<script>
 		$(document).ready(function() {
-		    $('#logs').DataTable({"pageLength": 200});
+		    $('#logs').DataTable({"pageLength": 200, "order": [[ 1, 'desc' ]]});
 		});
 	</script>
 	</body></html>""")
