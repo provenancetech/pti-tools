@@ -59,7 +59,7 @@ if __name__ == """__main__""":
         payload = payload + get_content_sha256(args.data.encode('UTF-8')) + "\n"
         payload = payload + 'content-type:' + args.content_type + "\n"
     else:
-        payload + "\n\n"
+        payload = payload + "\n\n"
 
     date = get_http_gmt()
     payload = payload + 'date:' + date + '\n'
