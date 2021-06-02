@@ -59,7 +59,7 @@ if __name__ == """__main__""":
         payload = payload + get_content_sha256(args.data.encode('UTF-8')) + "\n"
         payload = payload + 'content-type:' + args.content_type + "\n"
     else:
-        payload + "\n\n"
+        payload = payload + "\n\n"
 
     date = get_http_gmt()
     payload = payload + 'date:' + date + '\n'
@@ -77,7 +77,7 @@ if __name__ == """__main__""":
     if method == "POST":
         resp = requests.post(args.destination, verify=(not args.insecure), data = args.data.encode('UTF-8'), headers={"Content-Type": args.content_type, "Date": date, "x-pti-signature": signature, "x-pti-client-id": args.clientId})
     else:
-        resp = requests.get(args.destination, verify=(not args.insecure), headers={"Date": date, "x-pti-signature": signature,  "x-pti-client-id": args.clientId})
+        resp = requests.get(args.destination, verify=(not args.insecure), headers={"Content-Type": args.content_type, "Date": date, "x-pti-signature": signature,  "x-pti-client-id": args.clientId})
 
     data = dump.dump_all(resp).decode('utf-8')
     response_idx = data.rfind('\r\n> \r\n')
