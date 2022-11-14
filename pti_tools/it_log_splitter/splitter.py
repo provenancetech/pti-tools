@@ -3,16 +3,13 @@ from pathlib import Path
 from typing import List, Dict
 from pydantic import BaseModel as PydanticBase
 
-class ServiceCounts(PydanticBase):
-    error_count: int
-    warning_count: int
 
 class ServiceProblems(PydanticBase):
     errors: List[str] = []
     warnings: List[str] = []
 
-class ItLogSplitter:
 
+class ItLogSplitter:
     original_lines: List[str]
     start_idx: int = 0
     service_problems: Dict[str, ServiceProblems] = dict()
@@ -119,13 +116,8 @@ class ItLogSplitter:
         return summary_lines
 
 
-
-
 if __name__ == "__main__":
     splitter = ItLogSplitter()
-
     splitter.load_log_file("services.txt")
-
-    splitter.split_logs("split")
-
-    splitter.write_problem_report("split")
+    splitter.split_logs("out")
+    splitter.write_problem_report("out")
