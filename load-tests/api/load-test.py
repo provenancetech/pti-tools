@@ -21,7 +21,7 @@ class PtiLoadTests(HttpUser):
         userId = user['id']
         url = '/users/' + userId + '/transactions/fiat/funding'
         result = check_output(
-            ["./getToken.sh", self.client.base_url + "/auth/userToken", os.environ['KEYFILE'], os.environ['CLIENT_ID'],
+            ["./getToken.sh", self.client.base_url + "/auth/jwt", os.environ['KEYFILE'], os.environ['CLIENT_ID'],
              '{"url":"' + url + '","method": "POST"}'])
         req = json.loads(result)
         token = req["accessToken"]

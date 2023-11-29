@@ -16,7 +16,7 @@ if __name__ == """__main__""":
             print("Creation of the directory %s failed")
 
         for cpt in range(10) :
-            result = check_output(["./getToken.sh", args.url + "/auth/userToken", os.environ['KEYFILE'], os.environ['CLIENT_ID'], '{"url":"/users","method": "POST"}'])
+            result = check_output(["./getToken.sh", args.url + "/auth/jwt", os.environ['KEYFILE'], os.environ['CLIENT_ID'], '{"url":"/users","method": "POST"}'])
             req = json.loads(result)
             token = req["accessToken"]
             userId = str(uuid.uuid4())
