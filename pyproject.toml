@@ -9,7 +9,7 @@ packages = [{include = "pti_tools"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 docopt = "^0.6.2"
-pydantic = "^1.10.2"
+pydantic = "^1.10.13"
 psycopg2-binary = "^2.9.5"
 
 
