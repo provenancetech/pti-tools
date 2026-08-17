@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "master"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependabot"
+      - "github-actions"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    ignore:
+      # Major-only: skip minor/patch bumps (repos pin major tags, e.g. @v4).
+      # Note: `ignore` / `update-types` does NOT affect security updates.
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
