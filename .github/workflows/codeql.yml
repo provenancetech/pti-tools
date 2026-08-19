@@ -1,0 +1,41 @@
+name: CodeQL
+
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
+  actions: read
+
+on:
+  push:
+
+jobs:
+  build:
+    name: CodeQL analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        if: hashFiles('gradlew') != ''
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          config-file: .github/codeql/codeql-config.yml
+
+      - name: Build application
+        if: hashFiles('gradlew') != ''
+        run: ./gradlew build -x test
+        env:
+          GIT_USERNAME: ${{ secrets.CI_USERNAME }}
+          GIT_KEY: ${{ secrets.CI_TOKEN }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
