@@ -1,0 +1,13 @@
+name: "CodeQL default configuration"
+
+disable-default-queries: true
+
+queries:
+  - uses: security-and-quality
+
+query-filters:
+  - exclude:
+      id: actions/unpinned-tag
+
+paths-ignore:
+  - '**/.gradle/**'
