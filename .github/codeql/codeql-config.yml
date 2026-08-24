@@ -11,3 +11,7 @@ query-filters:
 
 paths-ignore:
   - '**/.gradle/**'
+  - '**/build/**'
+  - '**/cdk.out/**'
+  - '**/dist/**'
+  - '**/node_modules/**'
