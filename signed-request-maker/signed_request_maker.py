@@ -37,7 +37,8 @@ def get_content_sha256(data):
     return m.hexdigest().upper()
 
 def sign(client_id, payload, compact=True):
-    key = jwk.JWK.from_json(open(args.key_path, 'rb').read())
+    with open(args.key_path, 'rb') as key_file:
+        key = jwk.JWK.from_json(key_file.read())
     public_key = jwk.JWK()
     public_key.import_key(**json_decode(key.export_public()))
     jwstoken = jws.JWS(payload)

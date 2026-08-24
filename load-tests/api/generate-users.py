@@ -12,7 +12,7 @@ args = parser.parse_args()
 if __name__ == """__main__""":
         try:
             os.mkdir('users')
-        except:
+        except OSError:
             print("Creation of the directory %s failed")
 
         for cpt in range(10) :
@@ -28,7 +28,7 @@ if __name__ == """__main__""":
             body = '{"id":"' + userId + '","type": "PERSON","name":{"firstName": "' + firstName + '","lastName":"' + lastName + '"}}'
             newUserResult = requests.post(args.url + "/users", body, headers = headers)
             newUser = json.loads(newUserResult.content)
-            f = open('users/' + str(cpt) + ".json", "a")
-            jsonString = json.dumps(newUser)
-            f.write(jsonString)
+            with open('users/' + str(cpt) + ".json", "a") as f:
+                jsonString = json.dumps(newUser)
+                f.write(jsonString)
 
