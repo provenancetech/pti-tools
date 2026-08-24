@@ -2,8 +2,7 @@ import argparse
 import os
 import sys
 import uuid
-from jwcrypto import jwk, jwt, jws
-from jwcrypto.common import json_encode, json_decode
+from jwcrypto import jwk
 
 def environ_or_default(key, default):
     return (
@@ -21,7 +20,7 @@ args = p.parse_args()
 
 if args.subparser_name is None:
     p.print_help()
-    exit(-1)
+    sys.exit(-1)
 
 if args.subparser_name == 'genkey':
     key = jwk.JWK.generate(kty='RSA', size=4096, kid=args.kid)

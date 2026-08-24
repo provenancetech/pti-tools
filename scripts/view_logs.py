@@ -56,8 +56,8 @@ print(f'Found {len(events)} events')
 
 sorted_events = sorted(events, key=lambda tup: tup[1], reverse=True)
 
-f = open('logs.html', 'w')
-f.write("""
+with open('logs.html', 'w') as f:
+    f.write("""
 	<html><header>
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 		<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -65,15 +65,14 @@ f.write("""
 	</header><body><table id="logs"><thead><tr><th>LogGroup</th><th>Timestamp</th><th>Message</th></tr></thead><tbody>
 	""")
 
-for event in sorted_events:
-    ts = datetime.datetime.fromtimestamp(event[1] / 1000.0)
-    f.write(f"<tr><td>{html.escape(event[0])}</td><td>{ts}</td><td>{html.escape(event[2])}</td></tr>")
+    for event in sorted_events:
+        ts = datetime.datetime.fromtimestamp(event[1] / 1000.0)
+        f.write(f"<tr><td>{html.escape(event[0])}</td><td>{ts}</td><td>{html.escape(event[2])}</td></tr>")
 
-f.write("""</tbody></table>
+    f.write("""</tbody></table>
 	<script>
 		$(document).ready(function() {
 		    $('#logs').DataTable({"pageLength": 200, "order": [[ 1, 'desc' ]]});
 		});
 	</script>
 	</body></html>""")
-f.close();

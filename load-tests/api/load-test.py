@@ -16,8 +16,8 @@ class PtiLoadTests(HttpUser):
         filepath = "./users/" + str(random.randint(0, 9)) + ".json";
         print(filepath)
         print(os.environ['KEYFILE'])
-        f = open(filepath, "r")
-        user = json.loads(f.read())
+        with open(filepath, "r") as f:
+            user = json.loads(f.read())
         userId = user['id']
         url = '/users/' + userId + '/transactions/fiat/funding'
         result = check_output(
@@ -31,8 +31,8 @@ class PtiLoadTests(HttpUser):
                         ("x-pti-request-id", requestId),
                         ("x-pti-token", token)])
 
-        f = open("./requests/encryptedFiatIn.json", "r")
-        body = json.loads(f.read())
+        with open("./requests/encryptedFiatIn.json", "r") as f:
+            body = json.loads(f.read())
         body['initiator'] = user
         body['date'] = datetime.now().astimezone().replace(microsecond=0).isoformat()
         self.client.post(self.client.base_url + url, json.dumps(body), headers=headers)
