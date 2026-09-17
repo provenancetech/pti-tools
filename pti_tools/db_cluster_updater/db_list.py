@@ -1,6 +1,5 @@
 LIQUIBASE_DB_LIST = [
     "adminbackend",
-    "au10tix",
     "circleprovider",
     "clients",
     "dataservice",
